@@ -20,7 +20,7 @@ public class MethodExecutionTimeAspect {
 
         final long executionTime = System.currentTimeMillis() - start;
 
-        System.out.println("Target : " + joinPoint.getTarget()  + ". " + joinPoint.getSignature() + " executed in " + executionTime + "ms. Kind :" + joinPoint.getKind() );
+        System.out.println("Target : " + joinPoint.getTarget().getClass().getCanonicalName()  + ".\nKind :"  + joinPoint.getKind() + "\n"+ joinPoint.getSignature() + " executed in " + executionTime + "ms" );
         
 		/*
 		 * Method mth = null; try { mth = (Method)
