@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HelloService {
 	
-	//@LogExecutionTime(enabled=true)
+		@LogExecutionTime(enabled=true)
 		@Async
 		public Future<String>  utilMethod(String args) {
 			System.out.println("UtilMethod " + args);
