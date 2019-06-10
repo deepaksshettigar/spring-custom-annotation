@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 import org.springframework.scheduling.annotation.Async;
@@ -8,12 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuditServiceImpl implements AuditService {
-	
-		@LogExecutionTime(enabled=true)
-		@Async
-		@Override
-		public Future<String> audit(AuditMessage auditMessageRecord) {
-			System.out.println("Auditing Aysnc Service" + auditMessageRecord.get("record.id"));
+
+	@LogExecutionTime(enabled = true)
+	@Async
+	@Override
+	public Future<String> audit(List<AuditMessage> listAuditMessages) {
+		for (AuditMessage message : listAuditMessages) {
+			System.out.println("Auditing Aysnc Service" + message.get("record.id"));
 			try {
 				Thread.sleep(7000);
 				return new AsyncResult<String>("hello world !!!!");
@@ -21,9 +23,9 @@ public class AuditServiceImpl implements AuditService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			return null;
-			
 		}
+		return null;
+
+	}
 
 }

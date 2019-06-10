@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.AuditServiceImpl;
 import com.example.demo.LogExecutionTime;
-
+import com.example.demo.AuditProperties;
 
 
 @RestController
@@ -20,9 +22,12 @@ public class MainController {
 	@Autowired
 	AuditService auditService; 
 	
-	@LogExecutionTime(enabled=true)
+	
+	@LogExecutionTime
 	@RequestMapping("/service/audit")
 	public String controller() {
+		
+		
 		/*
 		 * Class<? extends HelloController> cls = this.getClass(); Method mth = null;
 		 * try { mth = cls.getMethod("hello"); } catch (NoSuchMethodException |
@@ -32,11 +37,13 @@ public class MainController {
 		 * System.out.println("annotation enabled : " + annotation.enabled());
 		 */
 		
-		AuditMessage auditMessageRecord = new AuditMessage();
-		auditMessageRecord.put("record.id", "001");
-		auditMessageRecord.put("record.msg", "Audit Message Record");
+		AuditMessage auditMessage = new AuditMessage();
+		auditMessage.put("record.id", "001");
+		auditMessage.put("record.msg", "Audit Message Record");
 		
-		auditService.audit(auditMessageRecord);
+		List<AuditMessage> listAuditMessages = new ArrayList<>();
+		listAuditMessages.add(auditMessage);
+		auditService.audit(listAuditMessages);
 		
 		System.out.println("Audit Service :: Continue to do some work");
 		int interval = 5000;
